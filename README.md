@@ -8,7 +8,58 @@ are key differences between the two?
 
 ### Work Done:
 
+As per asked task, I've played around with both the ScalaTest and ScalaCheck library, which are extensively used in order
+to test functionalities of Scala applications, by developing two different test classes, that test the same operations
+and axioms, as shown below. The properties tested were that of the Sequence object available in the lab repo, by which
+I check the properties that:
+* A Sequence has a length >= 0, regardless of the fact that it's filled or not with elements;
+* The sum of the members of a Sequence (made up of integers), remains the same after applying a generic filter that is
+true for all cases.
+Both of these properties were test in ScalaCheck and ScalaTest.
 
+#### ScalaCheck
+
+In order to test well ScalaCheck, I developed 
+[ScalaCheckPropertiesTest.scala](src/test/scala/u04/datastructures/task1/ScalaCheckPropertiesTest.scala). Generally
+speaking the library's used to do *Property-Based Testing*, where the main idea is to define general properties that can
+be easily tested, and therefore the code and entities tested need to adhere to. ScalaCheck also permits to generate
+automatically input tests randomly when verifying these properties, to make sure invariance isn't influencing the tests.
+
+The main characteristics of the library are:
+* **Data Generation**, meaning that ScalaCheck uses natively present generators to randomly create values to test with,
+in the code mainly seen in the `numsToGenerate[A]` method;
+* **Property Definition**, meaning that the properties that need to be tested, are defined through the `property` method,
+by which for example the property `"The sum remains the same even after filtering"` verifies that the sum of a Sequence
+is always the same, even after performing a basic filtering;
+* **Properties validation**, ScalaCheck performs test on a wide range of random values to make sure to cover a big range
+of scenarios to make sure the code is correct.
+
+#### ScalaTest
+
+Meanwhile, in order to test ScalaTest, I developed the 
+[ScalaTestPropertiesTest.scala](src/test/scala/u04/datastructures/task1/ScalaTestPropertiesTest.scala) file. Unlike
+ScalaCheck, ScalaTest is used to develop traditional *Unit Testing* classes, to develop very detailed and specific tests
+for specific functions of applications, where, when we say **Unit Tests**, we mean tests designed to verify a singular
+function or behaviour of a piece of code.
+
+The main characteristics of the library are:
+* **Specific Tests**, meaning that test are manually defined for each single case, therefore bringing the idea of
+specificity to the test itself, in the code this can be seen in the naming (and body) of a test like 
+`"The sum remains the same even after filtering"`;
+* **Multiple Executions**, meaning that to simulate multiple inputs, ScalaTest can re-run the same test multiple times,
+* with different data, *but* the data has to be generated and handled manually;
+* **Explicit Assertions**, meaning that the assertions that can be made (through the keyword `assert`), are used to
+verify specific conditions inside the tests, like the comparison between the results of the two sums tested.
+
+So all in all both libraries have their pros (and cons), and putting them side by side we can generally assert that:
+* When it comes to `Testing`, **ScalaTest** concentrates on delivering specific and detailed test cases, where inputs are
+handled mostly manually; meanwhile **ScalaCheck**, is based on more general properties and also generates inputs casually for
+tests, to tests these properties on a wide range of scenarios;
+* For `Input Data`, **ScalaTest** requires to manually define inputs or simulate them through specific libraries and code
+implementations; **ScalaCheck** automates the generation of input data, to explore a wider range of cases;
+* For the `Tests Goals`, **ScalaTest** it's mainly used for Unit Testing, therefore testing specific single case 
+behaviour of applications in a very detailed manner; meanwhile **ScalaCheck** aims to test properties that are generalized
+and invariant to time, on a wide range of scenarios.
 
 ## Task 2: ADT-VERIFIER
 
