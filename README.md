@@ -1,5 +1,15 @@
 # 04Lab - Verified Specification, ADTs, type classes, and monads
 
+## Task 1: TEST-OPERATE
+
+Download the repo and check everything works as expected. Play just a bit with ScalaCheck and see which parameters it 
+has (e.g. number of generated tests?). Play also with ScalaTest, and see if it can perform parameterized tests. What 
+are key differences between the two?
+
+### Work Done:
+
+
+
 ## Task 2: ADT-VERIFIER
 
 Define an ADT for sequences with some operations: map/filer/flatMap/fold/reduce/.... Turn into a Scala trait, and 
