@@ -149,3 +149,22 @@ The included tests `Concat Axiom => Cons` and `Concat Axiom: Nil` tested that, c
 * and secondly in the case of having empty sequences, that they would return the given sequence to concatenate.
 
 // TODO: ADD REDUCE OPERATION
+
+
+## Task 3: MONAD-VERIFIER
+
+Define ScalaCheck properties for Monad axioms, and prove that some of the monads given during the lesson actually 
+satisfy them. Derive a general methodology to structure those tests.
+
+### Work Done:
+
+As asked per task, I've developed a class called 
+[MonadProperties.scala](src/test/scala/u04/monads/task3/MonadProperties.scala) inside the test source directory, which,
+through the use of ScalaChecks, tests the most important axioms related to Monads inside Scala, which are the verification
+of 3 main monadic laws:
+* The *Left Identity*;
+* The *Right Identity*;
+* *Associativity*.
+
+All of this associated with the Monadic implementations of Optionals, to implement similar tests to the ones we've seen
+during class for Sequences.
