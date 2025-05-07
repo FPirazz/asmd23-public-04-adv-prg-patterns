@@ -137,7 +137,7 @@ The included tests `FoldLeft Axiom => Cons`, `FoldRight Axiom => Cons`, `FoldLef
 Axiom: Nil` tested that, considering both implementation of the sequences:
 * Firstly, that applying the mapping of a function on a sequence that is not empty, would properly apply the folding 
 function on the sequence;
-* and secondly in the case of having empty sequences, the first element of the fold. // TODO: REVISION THIS
+* and secondly in the case of having empty sequences, the first element of the fold.
 
 
 * ***Concat*** Operation:
@@ -148,9 +148,17 @@ The included tests `Concat Axiom => Cons` and `Concat Axiom: Nil` tested that, c
   on the sequence, making sure that the concatenation of the two sequences was correct;
 * and secondly in the case of having empty sequences, that they would return the given sequence to concatenate.
 
-// TODO: ADD REDUCE OPERATION
+
+* ***Reduce*** Operation:
+  * **Cons Axiom**: reduce(cons(h, t), f) = t.foldLeft(h)(f)
+    The included test `Concat Axiom => Cons`  tested that, considering both implementation of the sequences:
+* Firstly, that applying the mapping of a function on a sequence that is not empty, would properly apply the function
+  on the sequence, therefore reducing the sequence to one single element according to the provided function;
+For the Nil axiom, I didn't provide any tests, as it is "illegal" to perform a reduce function on a sequence with no
+elements in it.
 
 
+  
 ## Task 3: MONAD-VERIFIER
 
 Define ScalaCheck properties for Monad axioms, and prove that some of the monads given during the lesson actually 

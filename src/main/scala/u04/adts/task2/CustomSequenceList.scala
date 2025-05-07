@@ -1,5 +1,7 @@
 package scala.u04.adts.task2
 
+import scala.annotation.tailrec
+
 object CustomSequenceList:
 
   // Assigning Sequence to be an opaque alias of the native List implementation
@@ -18,9 +20,9 @@ object CustomSequenceList:
     def flatMap[B](mapper: A => ListSequence[B]): ListSequence[B] = seqList.flatMap(mapper)
       
     def foldRight[B](init: => B)(op: (A, B) => B): B = seqList.foldRight(init)(op)
-      
+    
     def foldLeft[B](init: => B)(op: (B, A) => B): B = seqList.foldLeft(init)(op)
-
-    def reduce[B](op: A => B): ListSequence[B] = seqList.reduce(op)
+    
+    def reduce[B](op: (A, A) => A): A = seqList.reduce(op)
 
     def concat(other: ListSequence[A]): ListSequence[A] = seqList.concat(other)

@@ -89,11 +89,11 @@ object SequencePropertiesTaskTwo extends Properties("Custom Sequences"):
   property("FlatMap Axiom: Nil") =
     forAll { (f: Int => csc.ConsSequence[Int]) =>
       val consResult = csc.nil[Int]().flatMap(f)
-      val expectedconsResult = csc.nil[Int]()
+      val expectedConsResult = csc.nil[Int]()
 
       val listResult = csl.nil[Int]().flatMap(x => csl.nil())
 
-      consResult == expectedconsResult &&
+      consResult == expectedConsResult &&
         listResult == csl.nil[Int]()
     }
 
@@ -142,10 +142,28 @@ object SequencePropertiesTaskTwo extends Properties("Custom Sequences"):
       consResult == listResult
     }
 
-  
+
   // Concat Operation
   // Axiom: concat(cons(h, t), l) = cons(h, concat(t, l))
   property("Concat Axiom: Cons") =
+    forAll { (h: Int, t: List[Int], seq2: List[Int]) =>
+      val customCons1 = t.foldRight(csc.cons(h, csc.nil[Int]()))((a, acc) => csc.cons(a, acc))
+      val customCons2 = seq2.foldRight(csc.nil[Int]())((a, acc) => csc.cons(a, acc))
+      val consResult = customCons1.concat(customCons2)
+
+      val customList1 = h :: t
+      val customList2 = seq2
+      val listResult = customList1 ++ customList2
+
+      val expectedConsResult = t.foldRight(csc.cons(h, customCons2))((a, acc) => csc.cons(a, acc))
+      val expectedListResult = h :: t ++ seq2
+
+      consResult == expectedConsResult &&
+        listResult == expectedListResult
+    }
+
+  // Axiom: concat(nil, l) = l
+  property("Concat Axiom: Nil") =
     forAll { (seq: List[Int]) =>
       val customCons = seq.foldRight(csc.nil[Int]())((a, acc) => csc.cons(a, acc))
       val consResult = csc.nil[Int]().concat(customCons)
@@ -158,18 +176,16 @@ object SequencePropertiesTaskTwo extends Properties("Custom Sequences"):
         listResult == customList
     }
 
-  // Axiom: concat(nil, l) = l
-  property("Concat Axiom: Nil") =
-    forAll { (h: Int, t: List[Int], seq2: List[Int]) =>
-      val customCons1 = t.foldRight(csc.cons(h, csc.nil[Int]()))((a, acc) => csc.cons(a, acc))
-      val customCons2 = seq2.foldRight(csc.nil[Int]())((a, acc) => csc.cons(a, acc))
-      val consResult = customCons1.concat(customCons2)
 
-      val customList1 = h :: t
-      val customList2 = seq2
-      val listResult = customList1 ++ customList2
+  // Reduce Operation
+  // Axiom: reduce(cons(h, t), f) = t.foldLeft(h)(f)
+  property("Reduce Axiom => Cons") =
+    forAll { (h: Int, t: List[Int], f: (Int, Int) => Int) =>
+      val customCons = t.foldRight(csc.cons(h, csc.nil[Int]()))((a, acc) => csc.cons(a, acc))
+      val consResult = customCons.reduce(f)
 
-      val expectedConsResult = t.foldRight(csc.cons(h, customCons2))((a, acc) => csc.cons(a, acc))
+      val customList = t.foldRight(csl.cons(h, csl.nil[Int]()))((a, acc) => csl.cons(a, acc))
+      val listResult = customList.reduce(f)
 
-      consResult == expectedConsResult && listResult == (h :: t ++ seq2)
+      consResult == listResult
     }

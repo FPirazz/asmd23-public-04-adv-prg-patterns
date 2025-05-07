@@ -39,10 +39,9 @@ object CustomSequenceCons:
     def foldLeft[B](init: => B)(op: (B, A) => B): B = seqCons match
       case Cons(h, t) => t.foldLeft(op(init, h))(op)
       case Nil() => init
-
+    
     def reduce[B](op: (A, A) => A): A = seqCons match
-      case Cons(h, t) => foldLeft(h)(op)
-      case Nil() => throw new UnsupportedOperationException("reduce is empty")
+      case Cons(h, t) => t.foldLeft(h)(op)
 
     def concat(other: ConsSequence[A]): ConsSequence[A] = seqCons match
       case Cons(head, tail) => Cons(head, tail.concat(other))
