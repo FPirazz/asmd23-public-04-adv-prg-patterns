@@ -176,3 +176,47 @@ of 3 main monadic laws:
 
 All of this associated with the Monadic implementations of Optionals, to implement similar tests to the ones we've seen
 during class for Sequences.
+
+
+
+
+## Task 4: MVC-ENGINEER
+
+Start with the given MVC monadic application: extend it to realise a more complex application, e.g. the DrawNumberGame. 
+Of course, be fully monadic. Up to which complexity can one reach? Could we come up with a simple MVC application with 
+reactive GUI, and/or could a GameLoop be framed into a fully monadic application?
+
+### Work Done:
+
+The task ha been implemented inside the files 
+[DrawNumberGame_MVC.scala](src/main/scala/u04/monads/task4/DrawNumberGame_MVC.scala) and 
+[DrawNumberGameState.scala](src/main/scala/u04/monads/task4/DrawNumberGameState.scala), where, as requested, it 
+implements the simple game of "Draw Number", where the computer draws a number between 0 and 100, and the User has to 
+guess in the least amounts of tries, through the feedback that the game gives back after each try. The implementation
+uses Monads to manage the state of the game and reactive graphical interface, the GUI, by integrating other notions of
+functional programming learned during the class, to manage the States and events. 
+
+#### Components:
+
+The various components used throughout the implementation are:
+
+* The **DrawNumberGameState**, where a trait named `DrawNumberGameState` is implemented to define the operations to manage
+the random number to guess. The operations are the one to initialize the number to guess (`initialGuesser()`), create a 
+new number (`reset()`) and verify the number inputted by the User (`checkGuess()`). These operations are modeled as 
+Monads of State `State[Guesser, A]`, where `Guesser` is an Int type declared inside the Game State which represents the 
+number to guess, to better manage the flow of the data inside the game.
+
+* The **windowCreation**, where the method with the same name configures and builds the games window using Monads, more
+specifically through the State `State[Window, A]`, to let the interface be reactive to GUI changes.
+
+* And the **States Casting**, more specifically in order to implement the previously stated State transformations, two
+extension methods have been defined that transform the State states in a `State[(Window, Guesser), A]` state. This
+is a Monadic approach that permits to manage both the game state and the UI in an easier way.
+
+
+Finally, all in all, the Monadic approach used could definitely be used to extend even more the present game loop, to a 
+more complex application, still completely Monadic, but, one thing to consider is that, if one were to make a more 
+advanced game/application, the increased complexity could make the project very difficult to maintain and manage,
+especially when it comes to synchronizing complex states or heavy graphical interfaces, though obviously this is paid off
+by having much more clarity and modularity in developing the application, including managing the states and the sequential
+operations.
